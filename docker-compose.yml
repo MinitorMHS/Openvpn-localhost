@@ -328,7 +328,7 @@ services:
     volumes:
       - ./vpn/server10/:/vpn
     ports:
-      - "8010:1080"  # Changed from 1082:1080 to 8082:1080
+      - "8090:1080"  # Changed from 1082:1080 to 8082:1080
     command: '-a ${SERVER10_EMAIL};${SERVER10_PASSWORD}'
   socks-server10:
     image: serjs/go-socks5-proxy
