@@ -340,34 +340,3 @@ services:
     network_mode: "service:openvpn-server10"
     stdin_open: true
     tty: true
-
-  # server11
-  openvpn-server11:
-    image: dperson/openvpn-client
-    cap_add:
-      - net_admin
-    networks:
-      - default
-    read_only: true
-    tmpfs:
-      - /run
-      - /tmp
-    security_opt:
-      - label:disable
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./vpn/server11/:/vpn
-    ports:
-      - "8011:1080"  # Changed from 1082:1080 to 8082:1080
-    command: '-a ${SERVER11_EMAIL};${SERVER11_PASSWORD}'
-  socks-server11:
-    image: serjs/go-socks5-proxy
-    depends_on:
-      - openvpn-server11
-    environment:
-      - PROXY_USER=${PROXY_USER}
-      - PROXY_PASSWORD=${PROXY_PASSWORD}
-    network_mode: "service:openvpn-server11"
-    stdin_open: true
-    tty: true
