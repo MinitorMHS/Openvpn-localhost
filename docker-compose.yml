@@ -19,7 +19,7 @@ services:
     volumes:
       - ./vpn/server/:/vpn
     ports:
-      - "8080:1080"  # Changed from 1080:1080 to 8080:1080
+      - "8080:1080"
   socks-server:
     image: serjs/go-socks5-proxy
     depends_on:
@@ -49,7 +49,7 @@ services:
     volumes:
       - ./vpn/server1/:/vpn
     ports:
-      - "8081:1080"  # Changed from 1081:1080 to 8081:1080
+      - "8081:1080"
     command: '-a ${SERVER1_EMAIL};${SERVER1_PASSWORD}'
   socks-server1:
     image: serjs/go-socks5-proxy
@@ -80,7 +80,7 @@ services:
     volumes:
       - ./vpn/server2/:/vpn
     ports:
-      - "8082:1080"  # Changed from 1082:1080 to 8083:1080
+      - "8082:1080"
     command: '-a ${SERVER2_EMAIL};${SERVER2_PASSWORD}'
   socks-server2:
     image: serjs/go-socks5-proxy
@@ -111,7 +111,7 @@ services:
     volumes:
       - ./vpn/server3/:/vpn
     ports:
-      - "8083:1080"  # Changed from 1083:1080 to 8083:1080
+      - "8083:1080"
     command: '-a ${SERVER3_EMAIL};${SERVER3_PASSWORD}'
   socks-server3:
     image: serjs/go-socks5-proxy
@@ -142,7 +142,7 @@ services:
     volumes:
       - ./vpn/server4/:/vpn
     ports:
-      - "8084:1080"  # Changed from 1082:1080 to 8084:1080
+      - "8084:1080"
     command: '-a ${SERVER4_EMAIL};${SERVER4_PASSWORD}'
   socks-server4:
     image: serjs/go-socks5-proxy
@@ -173,7 +173,7 @@ services:
     volumes:
       - ./vpn/server5/:/vpn
     ports:
-      - "8085:1080"  # Changed from 1082:1080 to 8082:1080
+      - "8085:1080"
     command: '-a ${SERVER5_EMAIL};${SERVER5_PASSWORD}'
   socks-server5:
     image: serjs/go-socks5-proxy
@@ -204,7 +204,7 @@ services:
     volumes:
       - ./vpn/server6/:/vpn
     ports:
-      - "8086:1080"  # Changed from 1082:1080 to 8082:1080
+      - "8086:1080"
     command: '-a ${SERVER6_EMAIL};${SERVER6_PASSWORD}'
   socks-server6:
     image: serjs/go-socks5-proxy
@@ -235,7 +235,7 @@ services:
     volumes:
       - ./vpn/server7/:/vpn
     ports:
-      - "8087:1080"  # Changed from 1082:1080 to 8082:1080
+      - "8087:1080"
     command: '-a ${SERVER7_EMAIL};${SERVER7_PASSWORD}'
   socks-server7:
     image: serjs/go-socks5-proxy
@@ -266,7 +266,7 @@ services:
     volumes:
       - ./vpn/server8/:/vpn
     ports:
-      - "8088:1080"  # Changed from 1082:1080 to 8082:1080
+      - "8088:1080"
     command: '-a ${SERVER8_EMAIL};${SERVER8_PASSWORD}'
   socks-server8:
     image: serjs/go-socks5-proxy
@@ -297,7 +297,7 @@ services:
     volumes:
       - ./vpn/server9/:/vpn
     ports:
-      - "8089:1080"  # Changed from 1082:1080 to 8082:1080
+      - "8089:1080"
     command: '-a ${SERVER9_EMAIL};${SERVER9_PASSWORD}'
   socks-server9:
     image: serjs/go-socks5-proxy
@@ -328,7 +328,7 @@ services:
     volumes:
       - ./vpn/server10/:/vpn
     ports:
-      - "8090:1080"  # Changed from 1082:1080 to 8082:1080
+      - "8090:1080"
     command: '-a ${SERVER10_EMAIL};${SERVER10_PASSWORD}'
   socks-server10:
     image: serjs/go-socks5-proxy
@@ -338,5 +338,67 @@ services:
       - PROXY_USER=${PROXY_USER}
       - PROXY_PASSWORD=${PROXY_PASSWORD}
     network_mode: "service:openvpn-server10"
+    stdin_open: true
+    tty: true
+
+  # server11
+  openvpn-server11:
+    image: dperson/openvpn-client
+    cap_add:
+      - net_admin
+    networks:
+      - default
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./vpn/server11/:/vpn
+    ports:
+      - "8091:1080"
+    command: '-a ${SERVER10_EMAIL};${SERVER10_PASSWORD}'
+  socks-server11:
+    image: serjs/go-socks5-proxy
+    depends_on:
+      - openvpn-server11
+    environment:
+      - PROXY_USER=${PROXY_USER}
+      - PROXY_PASSWORD=${PROXY_PASSWORD}
+    network_mode: "service:openvpn-server11"
+    stdin_open: true
+    tty: true
+
+  # server12
+  openvpn-server12:
+    image: dperson/openvpn-client
+    cap_add:
+      - net_admin
+    networks:
+      - default
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./vpn/server12/:/vpn
+    ports:
+      - "8092:1080"
+    command: '-a ${SERVER10_EMAIL};${SERVER10_PASSWORD}'
+  socks-server12:
+    image: serjs/go-socks5-proxy
+    depends_on:
+      - openvpn-server12
+    environment:
+      - PROXY_USER=${PROXY_USER}
+      - PROXY_PASSWORD=${PROXY_PASSWORD}
+    network_mode: "service:openvpn-server12"
     stdin_open: true
     tty: true
