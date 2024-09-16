@@ -402,3 +402,34 @@ services:
     network_mode: "service:openvpn-server12"
     stdin_open: true
     tty: true
+
+  # server13
+  openvpn-server13:
+    image: dperson/openvpn-client
+    cap_add:
+      - net_admin
+    networks:
+      - default
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./vpn/server13/:/vpn
+    ports:
+      - "8093:1080"
+    command: '-a ${SERVER10_EMAIL};${SERVER10_PASSWORD}'
+  socks-server13:
+    image: serjs/go-socks5-proxy
+    depends_on:
+      - openvpn-server13
+    environment:
+      - PROXY_USER=${PROXY_USER}
+      - PROXY_PASSWORD=${PROXY_PASSWORD}
+    network_mode: "service:openvpn-server13"
+    stdin_open: true
+    tty: true
